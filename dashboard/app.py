@@ -13,7 +13,6 @@ from plotly.subplots import make_subplots
 import sys
 import os
 from datetime import datetime, timedelta
-from src.monitoring.case_manager import CaseManager, AlertMonitor
 
 # Add src to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -26,6 +25,8 @@ root_dir = os.path.abspath(os.path.join(current_dir, ".."))
 # Add the root directory to Python's search path
 if root_dir not in sys.path:
     sys.path.insert(0, root_dir)
+
+from src.monitoring.case_manager import CaseManager, AlertMonitor
 
 # Page configuration
 st.set_page_config(
