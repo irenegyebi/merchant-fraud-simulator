@@ -1,0 +1,40 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Data (will be generated in container)
+data/raw/*.csv
+data/processed/*.csv
+
+# Models (will be trained in container)
+models/*.pkl
+
+# Logs
+logs/*.log
+
+# Reports
+reports/*.txt
+reports/*.pdf
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation build
+docs/_build/
