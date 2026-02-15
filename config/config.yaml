@@ -1,0 +1,139 @@
+# Merchant Fraud Detection Simulator Configuration
+# Version: 1.0.0
+# Author: Irene A. Gyebi
+
+project:
+  name: "Merchant Fraud Detection Simulator"
+  version: "1.0.0"
+  description: "End-to-end merchant risk scoring system mimicking fintech underwriting workflows"
+  author: "Irene A. Gyebi"
+  email: "igyebi@udel.edu"
+
+# Data Generation Parameters
+data_generation:
+  n_merchants: 10000
+  n_transactions: 500000
+  fraud_rate: 0.05  # 5% fraud rate
+  random_seed: 42
+
+  # Merchant profile distributions
+  merchant:
+    industries:
+      - name: "Retail"
+        risk_weight: 1.0
+        proportion: 0.25
+      - name: "E-commerce"
+        risk_weight: 1.3
+        proportion: 0.20
+      - name: "Food & Beverage"
+        risk_weight: 0.9
+        proportion: 0.15
+      - name: "Services"
+        risk_weight: 1.1
+        proportion: 0.15
+      - name: "Travel"
+        risk_weight: 1.5
+        proportion: 0.10
+      - name: "Digital Goods"
+        risk_weight: 1.8
+        proportion: 0.10
+      - name: "Gambling"
+        risk_weight: 2.5
+        proportion: 0.03
+      - name: "Cryptocurrency"
+        risk_weight: 3.0
+        proportion: 0.02
+
+    business_age:
+      min_days: 30
+      max_days: 3650
+      distribution: "exponential"
+
+    monthly_revenue:
+      min: 5000
+      max: 500000
+      distribution: "lognormal"
+
+    chargeback_rate:
+      mean: 0.01
+      std: 0.02
+      fraud_multiplier: 3.0
+
+# Risk Scoring Configuration
+risk_engine:
+  # Rule-based scoring weights
+  rule_weights:
+    industry_risk: 0.20
+    business_age: 0.15
+    chargeback_history: 0.25
+    velocity: 0.20
+    geographic_consistency: 0.10
+    transaction_pattern: 0.10
+
+  # Score thresholds
+  thresholds:
+    approve: 30
+    review: 60
+    decline: 85
+
+  # Velocity limits
+  velocity:
+    daily_transaction_limit: 100
+    hourly_transaction_limit: 20
+    amount_velocity_1h: 50000
+    amount_velocity_24h: 200000
+
+# ML Model Configuration
+models:
+  anomaly_detection:
+    algorithm: "isolation_forest"
+    contamination: 0.05
+    n_estimators: 100
+    max_samples: 0.8
+    random_state: 42
+
+  feature_engineering:
+    velocity_windows: [1, 6, 24]  # hours
+    amount_percentiles: [10, 25, 50, 75, 90, 99]
+    geographic_features: True
+    temporal_features: True
+
+# Monitoring Configuration
+monitoring:
+  alert_thresholds:
+    fraud_rate_spike: 0.08  # 8% fraud rate triggers alert
+    decline_rate_spike: 0.40  # 40% decline rate triggers alert
+    model_drift_psi: 0.25  # Population Stability Index threshold
+
+  case_management:
+    auto_escalate_score: 90
+    review_queue_size_warning: 100
+    avg_review_time_target: 300  # seconds
+
+# Dashboard Configuration
+dashboard:
+  title: "Merchant Risk Command Center"
+  refresh_interval: 30  # seconds
+  max_merchants_display: 1000
+
+  # Chart settings
+  default_time_range: "24h"
+  available_time_ranges: ["1h", "6h", "24h", "7d", "30d"]
+
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: False
+
+  rate_limiting:
+    requests_per_minute: 100
+    burst_size: 20
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/fraud_simulator.log"
+  max_size: 10485760  # 10MB
+  backup_count: 5
