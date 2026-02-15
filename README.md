@@ -105,7 +105,7 @@ python main.py --dashboard-only
 
 ### Access Dashboard
 
-Open browser to: **http://localhost:8501**
+Open browser to: **https://merchant-fraud-simulator.streamlit.app/**
 
 ---
 
